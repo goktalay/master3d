@@ -1,0 +1,80 @@
+[
+  {
+    "file": "01-hos-geldiniz-gece.png",
+    "theme": "dark",
+    "title": "Drag and drop, recent files",
+    "caption": "43 format families; files are opened only on this computer"
+  },
+  {
+    "file": "02-step-montaj-gece.png",
+    "theme": "dark",
+    "title": "STEP assembly: part tree and properties",
+    "caption": "Powered by OpenCascade; size, area, volume, B-rep faces"
+  },
+  {
+    "file": "03-patlatma-gece.png",
+    "theme": "dark",
+    "title": "Exploded view from the center",
+    "caption": "Slider from 0 to 100%; center, X / Y / Z or by the assembly tree"
+  },
+  {
+    "file": "04-patlatma-montaj-gunduz.png",
+    "theme": "light",
+    "title": "Exploded by the assembly tree",
+    "caption": "Each sub-assembly opens from its own center; 3MF, STEP, glTF, FBX"
+  },
+  {
+    "file": "05-gltf-pbr-gece.png",
+    "theme": "dark",
+    "title": "glTF / GLB: PBR materials and textures",
+    "caption": "Studio lighting, ground shadow; FBX, OBJ, USDZ, COLLADA open too"
+  },
+  {
+    "file": "06-ifc-bim-gunduz.png",
+    "theme": "light",
+    "title": "IFC (BIM): storeys and building elements",
+    "caption": "Walls, slabs, windows, doors; tree by spatial structure"
+  },
+  {
+    "file": "07-kesit-gece.png",
+    "theme": "dark",
+    "title": "Section plane",
+    "caption": "Slide along X / Y / Z to look inside the model"
+  },
+  {
+    "file": "08-olcum-gunduz.png",
+    "theme": "light",
+    "title": "Measuring and bounding box",
+    "caption": "Point-to-point distance; W × H × D in the model’s unit"
+  },
+  {
+    "file": "09-tel-kafes-gece.png",
+    "theme": "dark",
+    "title": "Shaded + edges, wireframe, X-ray",
+    "caption": "Display modes: press W to switch"
+  },
+  {
+    "file": "10-nokta-bulutu-gece.png",
+    "theme": "dark",
+    "title": "Point clouds: PCD, PLY, XYZ",
+    "caption": "Millions of points; coloured scans"
+  },
+  {
+    "file": "11-disa-aktar-gunduz.png",
+    "theme": "light",
+    "title": "Export: 15 formats",
+    "caption": "GLB, FBX, OBJ, STEP, STL, 3MF, USDZ…; selected part or each part to its own file"
+  },
+  {
+    "file": "12-ayarlar-bicimler-gece.png",
+    "theme": "dark",
+    "title": "Settings › Formats",
+    "caption": "Which format opens with which reader; known limits"
+  },
+  {
+    "file": "13-giris-gunduz.png",
+    "theme": "light",
+    "title": "Sign in with your Mastertool account",
+    "caption": "Opens without a password if you are signed in to another Mastertool app"
+  }
+]

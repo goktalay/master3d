@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Master 3D</title>
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="mastertool.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <img src="../../build/icon.png" alt="">
+        <div class="brand-text">
+          <div class="brand-name">Master 3D</div>
+          <div class="brand-sub" id="fileInfo"></div>
+        </div>
+      </div>
+      <div class="search">
+        <span class="search-ico"></span>
+        <input id="search" spellcheck="false" disabled>
+      </div>
+      <div class="actions">
+        <button class="btn ghost icon-only" id="btnSettings"></button>
+        <button class="btn" id="btnOpen"></button>
+        <button class="btn primary" id="btnExport" disabled></button>
+        <button class="account-chip" id="btnAccount"><span class="ac-avatar"></span><span class="ac-sync"></span></button>
+      </div>
+    </header>
+
+    <div class="update-bar hidden" id="updateBar"></div>
+
+    <div class="main" id="main">
+      <aside class="side" id="side">
+        <div class="panel-head">
+          <span class="ph-title" id="treeTitle"></span>
+          <span class="ph-count" id="treeCount"></span>
+          <span class="spacer"></span>
+          <button class="icon-btn" id="btnShowAll"></button>
+          <button class="icon-btn" id="btnCollapse"></button>
+        </div>
+        <div class="tree" id="tree"></div>
+        <div class="props" id="props"></div>
+      </aside>
+
+      <section class="stage" id="stage">
+        <div class="vp-bg" id="vpBg"></div>
+        <div class="vp-host" id="vpHost"></div>
+        <div class="vp-toolbar hidden" id="vpToolbar"></div>
+        <div class="vp-views hidden" id="vpViews"></div>
+        <div class="vp-explode hidden" id="vpExplode"></div>
+        <div class="vp-stats hidden" id="vpStats"></div>
+        <div class="vp-hint hidden" id="vpHint"></div>
+        <div class="welcome" id="welcome"></div>
+        <div class="loading hidden" id="loading"></div>
+        <div class="drop hidden" id="drop"></div>
+      </section>
+
+      <aside class="inspector" id="inspector"></aside>
+    </div>
+  </div>
+
+  <script src="../i18n.js"></script>
+  <script src="../formats.js"></script>
+  <script src="ui.js"></script>
+  <script src="mastertool.js"></script>
+  <script type="module" src="gen/app.js"></script>
+</body>
+</html>

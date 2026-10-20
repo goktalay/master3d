@@ -1,0 +1,7 @@
+node_modules/
+dist/
+samples/
+src/renderer/gen/
+*.log
+.DS_Store
+Thumbs.db

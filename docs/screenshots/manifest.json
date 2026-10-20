@@ -1,0 +1,80 @@
+[
+  {
+    "file": "01-hos-geldiniz-gece.png",
+    "theme": "dark",
+    "title": "Sürükle-bırak ve son açılanlar",
+    "caption": "43 biçim ailesi; dosyalar yalnız bu bilgisayarda açılır"
+  },
+  {
+    "file": "02-step-montaj-gece.png",
+    "theme": "dark",
+    "title": "STEP montajı: parça ağacı ve özellikler",
+    "caption": "OpenCascade ile; boyut, alan, hacim, B-rep yüzleri"
+  },
+  {
+    "file": "03-patlatma-gece.png",
+    "theme": "dark",
+    "title": "Patlatma: parçalar merkezden açılır",
+    "caption": "Kaydırıcıyla %0–100; merkez, X / Y / Z ya da montaj ağacına göre"
+  },
+  {
+    "file": "04-patlatma-montaj-gunduz.png",
+    "theme": "light",
+    "title": "Montaj ağacına göre patlatma",
+    "caption": "Her alt montaj kendi merkezinden; 3MF, STEP, glTF, FBX"
+  },
+  {
+    "file": "05-gltf-pbr-gece.png",
+    "theme": "dark",
+    "title": "glTF / GLB: PBR malzeme ve dokular",
+    "caption": "Stüdyo ışığı, zemin gölgesi; FBX, OBJ, USDZ, COLLADA da açılır"
+  },
+  {
+    "file": "06-ifc-bim-gunduz.png",
+    "theme": "light",
+    "title": "IFC (BIM): kat ve yapı elemanları",
+    "caption": "Duvar, döşeme, pencere, kapı; mekânsal yapıya göre ağaç"
+  },
+  {
+    "file": "07-kesit-gece.png",
+    "theme": "dark",
+    "title": "Kesit düzlemi",
+    "caption": "X / Y / Z ekseninde kaydırarak modelin içini görün"
+  },
+  {
+    "file": "08-olcum-gunduz.png",
+    "theme": "light",
+    "title": "Ölçüm ve sınır kutusu",
+    "caption": "İki nokta arası uzaklık; G × Y × D ölçüleri model biriminde"
+  },
+  {
+    "file": "09-tel-kafes-gece.png",
+    "theme": "dark",
+    "title": "Gölgeli + kenarlar, tel kafes, X-ışını",
+    "caption": "Görünüm kipleri: W ile değiştirin"
+  },
+  {
+    "file": "10-nokta-bulutu-gece.png",
+    "theme": "dark",
+    "title": "Nokta bulutu: PCD, PLY, XYZ",
+    "caption": "Milyonlarca nokta; renkli taramalar"
+  },
+  {
+    "file": "11-disa-aktar-gunduz.png",
+    "theme": "light",
+    "title": "Dışa aktar: 15 biçim",
+    "caption": "GLB, FBX, OBJ, STEP, STL, 3MF, USDZ…; seçili parça ya da her parça ayrı dosya"
+  },
+  {
+    "file": "12-ayarlar-bicimler-gece.png",
+    "theme": "dark",
+    "title": "Ayarlar › Biçimler",
+    "caption": "Hangi biçim hangi okuyucuyla açılır; bilinen sınırlar"
+  },
+  {
+    "file": "13-giris-gunduz.png",
+    "theme": "light",
+    "title": "Mastertool hesabıyla giriş",
+    "caption": "Başka bir Mastertool uygulamasında giriş yapıldıysa şifresiz açılır"
+  }
+]

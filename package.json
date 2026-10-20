@@ -1,0 +1,85 @@
+{
+  "name": "master-3d",
+  "productName": "Master 3D",
+  "version": "1.0.0",
+  "description": "3B dosya önizleyici: glTF, FBX, OBJ, STL, STEP, IGES, 3MF ve onlarca biçimi açar, parçalarına ayırır (patlatma) ve başka 3B biçimlere dışa aktarır",
+  "main": "src/main.js",
+  "author": "Mastertool",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node scripts/build.js && electron .",
+    "build": "node scripts/build.js",
+    "watch": "node scripts/build.js --watch",
+    "test": "node --test test/",
+    "icon": "node scripts/make-icon.js",
+    "samples": "node scripts/fetch-samples.js && node scripts/make-fixtures.js",
+    "verify-formats": "node scripts/build.js && node scripts/verify-formats.js",
+    "verify-export": "node scripts/build.js && node scripts/verify-export.js",
+    "screenshots": "node scripts/build.js && node scripts/screenshots.js",
+    "dist": "node scripts/build.js && electron-builder --win",
+    "dist:portable": "node scripts/build.js && electron-builder --win portable"
+  },
+  "dependencies": {
+    "@napi-rs/keyring": "^2.1.2"
+  },
+  "devDependencies": {
+    "assimpjs": "0.0.10",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.28.2",
+    "fflate": "^0.8.3",
+    "occt-import-js": "0.0.23",
+    "playwright-core": "^1.64.1",
+    "png-to-ico": "^2.1.8",
+    "rhino3dm": "^8.35.0",
+    "sharp": "^0.33.5",
+    "three": "0.186.1",
+    "web-ifc": "0.0.78"
+  },
+  "build": {
+    "appId": "com.mastertool.master3d",
+    "productName": "Master 3D",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "!src/core/**",
+      "!src/renderer/app/**",
+      "build/icon.png",
+      "build/icon.svg",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "artifactName": "Master-3D-Setup-${version}.exe",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Master 3D",
+      "include": "build/installer.nsh",
+      "menuCategory": "Master Tool"
+    },
+    "portable": {
+      "artifactName": "Master-3D-Portable-${version}.exe"
+    }
+  }
+}
