@@ -18,7 +18,8 @@
     "verify-export": "node scripts/build.js && node scripts/verify-export.js",
     "screenshots": "node scripts/build.js && node scripts/screenshots.js",
     "dist": "node scripts/build.js && electron-builder --win",
-    "dist:portable": "node scripts/build.js && electron-builder --win portable"
+    "dist:portable": "node scripts/build.js && electron-builder --win portable",
+    "e2e": "node scripts/build.js && node scripts/e2e-electron.js"
   },
   "dependencies": {
     "@napi-rs/keyring": "^2.1.2"

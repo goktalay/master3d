@@ -159,7 +159,9 @@ Daha önce yayınlanmış bir sürümü yeniden yüklemek için Actions › "mas
 `npm test` (Node, 49 test): hesap ve ortak oturum, i18n eşliği (8 dil, yer tutucular), protokol yol güvenliği, komut satırı ve sağ
 tık kaydı, biçim kaydı, çekirdek (OpenCascade ve assimp hatları, VTK / X3D / VRML, ZIP seçimi, patlatma, bağlantısız parça bulma,
 alan / hacim, IFC ağacı), 15 dışa aktarma biçiminin bağımsız okuyucularla gidiş-dönüşü ve ana süreç (sahte Electron).
-`npm run verify-formats` ve `npm run verify-export` gerçek örnek dosyalarla tarayıcıda (Chromium, WebGL) arayüz akışını sınar.
+`npm run verify-formats` ve `npm run verify-export` gerçek örnek dosyalarla tarayıcıda (Chromium, WebGL) arayüz akışını sınar;
+`npm run e2e -- <model…>` paketli uygulamayı gerçek Electron ana süreciyle çalıştırır (sahte hesap sunucusu, giriş, `--open`,
+m3:// protokolü, WebAssembly iş parçacıkları ve içerik güvenlik politikası).
 
 ## Bilinen sınırlar
 

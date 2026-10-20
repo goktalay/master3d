@@ -48,6 +48,7 @@ npm run samples                    # gerçek örnek dosyalar → samples/ (git'e
 npm run verify-formats             # örnekleri arayüzde açar → docs/format-verification.md (Chromium: CHROMIUM_PATH)
 npm run verify-export              # her biçime yazar ve geri açar → docs/export-verification.md
 npm run screenshots                # docs/screenshots (tr) ve docs/screenshots/en
+npm run e2e -- samples/step/as1-oc-214.stp   # gerçek Electron: giriş, açma, CSP (Linux'ta DISPLAY gerekir)
 npm run icon                       # build/icon.svg → icon.png + icon.ico
 npm run dist                       # Windows: kurulum + portable (dist/)
 ```

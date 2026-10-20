@@ -213,6 +213,8 @@ async function openDialog() {
   if (r.code === 'canceled') return;
   handleOpenResult(r);
 }
+// Tanılama / uçtan uca test: ana süreçten gelen açma sonucu (scripts/e2e-electron.js)
+state.openResult = (r) => handleOpenResult(r);
 function handleOpenResult(r) {
   if (!r) return;
   if (!r.ok) {
