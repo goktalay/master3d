@@ -77,8 +77,8 @@ occt-import-js projelerinin test modelleri ile üretilen örnekler arayüzün ke
 
 ## Patlatma
 
-- Kaydırıcıyla %0–100, **Oynat** ile canlandırma (E). Kipler: **Merkez** (parçalar modelin merkezinden dışarı, oransal),
-  **X / Y / Z** (eksen boyunca; eş merkezli parçalar boyutlarına göre sıralanır), **Montaj** (her alt montaj kendi merkezinden,
+- Kaydırıcıyla %0–100, **Oynat** ile canlandırma (E). Kipler: **Ortadan** (parçalar modelin ortasından dışarı, oransal),
+  **X / Y / Z** (eksen boyunca; iç içe parçalar boyutlarına göre sıralanır), **Montaj** (her alt montaj kendi ortasından,
   derinlik arttıkça daha az — montaj yapısı görünür kalır).
 - **Parça düzeyi**: tüm gövdeler ya da ağacın 1., 2.… düzeyi (ör. yalnız alt montajları ayır). glTF'in çok malzemeli ağları tek
   parça sayılır.

@@ -14,14 +14,14 @@
   {
     "file": "03-patlatma-gece.png",
     "theme": "dark",
-    "title": "Patlatma: parçalar merkezden açılır",
-    "caption": "Kaydırıcıyla %0–100; merkez, X / Y / Z ya da montaj ağacına göre"
+    "title": "Patlatma: parçalar ortadan dışa açılır",
+    "caption": "Kaydırıcıyla %0–100; ortadan, X / Y / Z ya da montaj ağacına göre"
   },
   {
     "file": "04-patlatma-montaj-gunduz.png",
     "theme": "light",
     "title": "Montaj ağacına göre patlatma",
-    "caption": "Her alt montaj kendi merkezinden; 3MF, STEP, glTF, FBX"
+    "caption": "Her alt montaj kendi ortasından; 3MF, STEP, glTF, FBX"
   },
   {
     "file": "05-gltf-pbr-gece.png",

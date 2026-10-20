@@ -18,8 +18,8 @@ const NOW = Date.UTC(2026, 9, 20, 9, 30);
 const T = {
   welcome: { tr: ['Sürükle-bırak ve son açılanlar', `${NF} biçim ailesi; dosyalar yalnız bu bilgisayarda açılır`], en: ['Drag and drop, recent files', `${NF} format families; files are opened only on this computer`] },
   step: { tr: ['STEP montajı: parça ağacı ve özellikler', 'OpenCascade ile; boyut, alan, hacim, B-rep yüzleri'], en: ['STEP assembly: part tree and properties', 'Powered by OpenCascade; size, area, volume, B-rep faces'] },
-  explode: { tr: ['Patlatma: parçalar merkezden açılır', 'Kaydırıcıyla %0–100; merkez, X / Y / Z ya da montaj ağacına göre'], en: ['Exploded view from the center', 'Slider from 0 to 100%; center, X / Y / Z or by the assembly tree'] },
-  tree: { tr: ['Montaj ağacına göre patlatma', 'Her alt montaj kendi merkezinden; 3MF, STEP, glTF, FBX'], en: ['Exploded by the assembly tree', 'Each sub-assembly opens from its own center; 3MF, STEP, glTF, FBX'] },
+  explode: { tr: ['Patlatma: parçalar ortadan dışa açılır', 'Kaydırıcıyla %0–100; ortadan, X / Y / Z ya da montaj ağacına göre'], en: ['Exploded view from the center', 'Slider from 0 to 100%; center, X / Y / Z or by the assembly tree'] },
+  tree: { tr: ['Montaj ağacına göre patlatma', 'Her alt montaj kendi ortasından; 3MF, STEP, glTF, FBX'], en: ['Exploded by the assembly tree', 'Each sub-assembly opens from its own center; 3MF, STEP, glTF, FBX'] },
   pbr: { tr: ['glTF / GLB: PBR malzeme ve dokular', 'Stüdyo ışığı, zemin gölgesi; FBX, OBJ, USDZ, COLLADA da açılır'], en: ['glTF / GLB: PBR materials and textures', 'Studio lighting, ground shadow; FBX, OBJ, USDZ, COLLADA open too'] },
   ifc: { tr: ['IFC (BIM): kat ve yapı elemanları', 'Duvar, döşeme, pencere, kapı; mekânsal yapıya göre ağaç'], en: ['IFC (BIM): storeys and building elements', 'Walls, slabs, windows, doors; tree by spatial structure'] },
   section: { tr: ['Kesit düzlemi', 'X / Y / Z ekseninde kaydırarak modelin içini görün'], en: ['Section plane', 'Slide along X / Y / Z to look inside the model'] },

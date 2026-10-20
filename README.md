@@ -26,7 +26,7 @@ ve **Master Tool** masaüstü uygulamasından.
   düzlemi; animasyon oynatma; 2× PNG ekran görüntüsü.
 - **Parça ağacı ve özellikler**: dosyanın hiyerarşisi (STEP montajı, IFC katları, glTF düğümleri), arama, gizle / göster / yalnız
   bunu göster; üçgen, boyut, yüzey alanı, hacim, malzemeler.
-- **Patlatma**: merkezden, X / Y / Z boyunca ya da montaj ağacına göre; parça düzeyi; canlandırma. Montaj bilgisi olmayan
+- **Patlatma**: ortadan dışa, X / Y / Z boyunca ya da montaj ağacına göre; parça düzeyi; canlandırma. Montaj bilgisi olmayan
   dosyalarda **bağlantısız parçalara ayırma**.
 - **Dışa aktarma**: GLB, glTF, FBX 7.4, OBJ + MTL, COLLADA, USDZ, STEP AP214, STL (ikili / ASCII), 3MF, PLY (ikili / ASCII),
   VRML, X3D, OFF — tüm model, seçili parçalar ya da görünenler; her parça ayrı dosya; birim ve eksen dönüşümü
