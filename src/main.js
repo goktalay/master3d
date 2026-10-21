@@ -55,7 +55,7 @@ function main() {
     explodeMode: 'radial',   // radial | x | y | z | tree
     autoRotate: false, invertZoom: false, showStats: true,
   });
-  const defaultExport = () => ({ format: 'glb', scope: 'all', onlyVisible: true, exploded: false, convert: true, each: false });
+  const defaultExport = () => ({ format: 'glb', scope: 'all', onlyVisible: true, exploded: false, convert: true, each: false, stepMerge: 20 });
 
   const defaultStore = () => ({
     syncMeta: {},
@@ -83,6 +83,8 @@ function main() {
     const o = pick(v, defaultExport());
     if (!FORMATS.exportById(o.format)) o.format = 'glb';
     if (!['all', 'selected', 'visible'].includes(o.scope)) o.scope = 'all';
+    // STEP düzlemsel yüz birleştirme yüzdesi (0 = kapalı)
+    o.stepMerge = Number.isFinite(o.stepMerge) ? Math.max(0, Math.min(100, Math.round(o.stepMerge))) : defaultExport().stepMerge;
     return o;
   }
 

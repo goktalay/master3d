@@ -5,6 +5,7 @@
 import FORMATS from '../../formats.js';
 import { exportModel, exportEach } from '../../core/export/index.mjs';
 import { TARGET } from '../../core/export/prepare.mjs';
+import { mergeTolerance } from '../../core/export/planar.mjs';
 import { isShown } from '../../core/scene.mjs';
 import { formatBytes } from './units.mjs';
 
@@ -27,6 +28,30 @@ function targetHint(id) {
   return t('exp.convTo', { unit: tg.unit || t('exp.unitSame'), up: (tg.up || '?').toUpperCase() });
 }
 
+const pct = (v) => (v / 100).toLocaleString(document.documentElement.lang || undefined, { style: 'percent' });
+
+// STEP düzlemsel yüz birleştirme alanı (Dışa aktar penceresi ve Ayarlar › Dışa aktarma ortak)
+export function stepMergeField(id, value) {
+  const v = Math.max(0, Math.min(100, Math.round(Number(value) || 0)));
+  return `<div class="field step-merge"><label for="${id}">${esc(t('exp.stepMerge'))}</label>
+    <div class="sm-row"><input type="range" id="${id}" min="0" max="100" step="1" value="${v}"><b class="sm-val" data-for="${id}">${pct(v)}</b></div>
+    <small class="hint sm-tol" data-for="${id}"></small>
+    <small class="hint">${esc(t('exp.stepMergeHint'))}</small></div>`;
+}
+export function bindStepMerge(root, id) {
+  const r = root.querySelector('#' + id);
+  const upd = () => {
+    const p = Number(r.value);
+    root.querySelector(`.sm-val[data-for="${id}"]`).textContent = pct(p);
+    const tol = mergeTolerance(p, 100);
+    const nf = (x, d) => x.toLocaleString(document.documentElement.lang || undefined, { maximumFractionDigits: d });
+    root.querySelector(`.sm-tol[data-for="${id}"]`).textContent = tol ? t('exp.stepMergeTol', { a: nf(tol.angle, 1), d: nf(tol.dist, 3) }) : t('exp.stepMergeOff');
+  };
+  r.addEventListener('input', upd);
+  upd();
+  return () => Number(r.value);
+}
+
 export async function openExportDialog({ doc, viewer, selection, prefs, scope: forceScope, savePrefs }) {
   let fmtId = FORMATS.exportById(prefs.format) ? prefs.format : 'glb';
   const hasSel = selection.length > 0;
@@ -46,10 +71,13 @@ export async function openExportDialog({ doc, viewer, selection, prefs, scope: f
     <label class="check"><input type="checkbox" id="eConv" ${prefs.convert !== false ? 'checked' : ''}><span>${esc(t('exp.convert'))}<small id="eConvHint"></small></span></label>
     <label class="check ${exploded ? '' : 'hidden'}"><input type="checkbox" id="eExpl" ${prefs.exploded ? 'checked' : ''}><span>${esc(t('exp.exploded'))}<small>${esc(t('exp.explodedHint'))}</small></span></label>
     <label class="check"><input type="checkbox" id="eEach" ${prefs.each ? 'checked' : ''}><span>${esc(t('exp.each'))}<small>${esc(t('exp.eachHint'))}</small></span></label>
+    <div id="eStepBox">${stepMergeField('eStep', prefs.stepMerge ?? 20)}</div>
     <div class="exp-note" id="eNote"></div>
   </div>`);
   const q = (s) => body.querySelector(s);
+  const stepMerge = bindStepMerge(body, 'eStep');
   const paint = () => {
+    q('#eStepBox').classList.toggle('hidden', fmtId !== 'step');
     body.querySelectorAll('.exp-card').forEach((c) => c.classList.toggle('on', c.dataset.id === fmtId));
     body.querySelectorAll('#eScope button').forEach((b) => b.classList.toggle('on', b.dataset.v === scope));
     q('#eConvHint').textContent = targetHint(fmtId);
@@ -71,7 +99,7 @@ export async function openExportDialog({ doc, viewer, selection, prefs, scope: f
         label: t('exp.go'), cls: 'primary', icon: 'export',
         onClick: async (modal, btn) => {
           const fmt = FORMATS.exportById(fmtId);
-          const opts = { convert: q('#eConv').checked, exploded: exploded && q('#eExpl').checked, each: q('#eEach').checked };
+          const opts = { convert: q('#eConv').checked, exploded: exploded && q('#eExpl').checked, each: q('#eEach').checked, stepMerge: stepMerge() };
           savePrefs({ format: fmtId, scope, ...opts });
           btn.disabled = true;
           btn.innerHTML = `<span class="spin"></span>${esc(t('exp.working'))}`;
@@ -84,7 +112,7 @@ export async function openExportDialog({ doc, viewer, selection, prefs, scope: f
             const common = {
               baseName: doc.file.name.replace(/\.[^.]+$/, ''),
               src: { up: doc.upAxis, unit: doc.srcUnit }, convert: opts.convert, onlyVisible: scope === 'visible',
-              animations: doc.result.animations || [], encodeImage,
+              animations: doc.result.animations || [], encodeImage, stepMerge: opts.stepMerge,
             };
             let res;
             if (opts.each) {

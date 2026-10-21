@@ -30,7 +30,8 @@ ve **Master Tool** masaüstü uygulamasından.
   dosyalarda **bağlantısız parçalara ayırma**.
 - **Dışa aktarma**: GLB, glTF, FBX 7.4, OBJ + MTL, COLLADA, USDZ, STEP AP214, STL (ikili / ASCII), 3MF, PLY (ikili / ASCII),
   VRML, X3D, OFF — tüm model, seçili parçalar ya da görünenler; her parça ayrı dosya; birim ve eksen dönüşümü
-  ([docs/export-verification.md](docs/export-verification.md)).
+  ([docs/export-verification.md](docs/export-verification.md)). STEP'te **düzlemsel yüz birleştirme** (ayarlanabilir yüzde):
+  düz yüzeyler CAD'de üçgen üçgen değil tek yüz olarak açılır.
 - **Gezgin**: "Master 3D ile aç" sağ tık menüsü ve "Birlikte aç" listesi (varsayılan uygulama değişmez), sürükle-bırak, son
   açılanlar, tek pencere.
 - **Mastertool hesabı**: ortak oturum (SSO) ve uçtan uca şifreli ayar senkronu; 8 dil, Gece / Gündüz / Sistem teması.
@@ -43,7 +44,7 @@ Ayrıntılar, teknoloji ve bilinen sınırlar: [docs/site-teknik.md](docs/site-t
 npm install
 npm start                          # scripts/build.js (esbuild + WASM kitaplıkları) && electron .
 npm start -- --open C:\yol\parca.step
-npm test                           # node --test (49 test)
+npm test                           # node --test (54 test)
 npm run samples                    # gerçek örnek dosyalar → samples/ (git'e girmez)
 npm run verify-formats             # örnekleri arayüzde açar → docs/format-verification.md (Chromium: CHROMIUM_PATH)
 npm run verify-export              # her biçime yazar ve geri açar → docs/export-verification.md

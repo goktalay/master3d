@@ -354,3 +354,8 @@ canvas.viewport.measuring { cursor: crosshair; }
 .fmt-table td:nth-child(2) { font-family: var(--mono); font-size: 11px; color: var(--text-2); }
 .fmt-table td:last-child { color: var(--text-3); white-space: nowrap; }
 .hidden { display: none !important; }
+
+/* STEP düzlemsel yüz birleştirme */
+.step-merge .sm-row { display: flex; align-items: center; gap: 12px; }
+.step-merge .sm-val { min-width: 44px; text-align: right; font-variant-numeric: tabular-nums; }
+.step-merge .sm-tol { color: var(--accent); }

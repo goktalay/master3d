@@ -51,7 +51,7 @@ export async function exportModel(model, id, opts = {}) {
     case 'dae': files = [file(writeDAE(root, { unit, up, title: baseName }))]; break;
     case 'step':
       if (stats.triangles > STEP_TRI_WARN) warnings.push({ key: 'exp.warn.stepLarge', vars: { n: stats.triangles } });
-      files = [file(writeSTEP(root, { name: baseName }))];
+      files = [file(writeSTEP(root, { name: baseName, merge: opts.stepMerge || 0 }))];
       break;
     case 'stl': files = [file(writeSTL(root, { binary: true }))]; break;
     case 'stl-ascii': files = [file(writeSTL(root, { binary: false }))]; break;

@@ -1,7 +1,7 @@
 {
   "name": "master-3d",
   "productName": "Master 3D",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "3B dosya önizleyici: glTF, FBX, OBJ, STL, STEP, IGES, 3MF ve onlarca biçimi açar, parçalarına ayırır (patlatma) ve başka 3B biçimlere dışa aktarır",
   "main": "src/main.js",
   "author": "Mastertool",

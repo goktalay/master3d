@@ -5,3 +5,4 @@ src/renderer/gen/
 *.log
 .DS_Store
 Thumbs.db
+.tmp/

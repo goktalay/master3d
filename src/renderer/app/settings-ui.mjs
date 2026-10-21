@@ -1,7 +1,9 @@
-// Ayarlar penceresi (Mastertool ortak iskeleti: solda sekmeler) — Genel · Hesap · Görüntüleyici · Biçimler · Hakkında.
+// Ayarlar penceresi (Mastertool ortak iskeleti: solda sekmeler) — Genel · Hesap · Görüntüleyici · Dışa aktarma · Biçimler ·
+// Hakkında.
 /* global t, icon, esc, h, toast, openModal, confirmBox, I18N, LANG */
 
 import FORMATS from '../../formats.js';
+import { stepMergeField, bindStepMerge } from './export-ui.mjs';
 
 const OSS = [
   ['Master 3D', 'MIT'], ['three.js', 'MIT'], ['OpenCascade (occt-import-js)', 'LGPL-2.1'], ['Open Asset Import Library (assimpjs)', 'BSD-3-Clause / MIT'],
@@ -18,7 +20,7 @@ export async function openSettings({ tab = 'general', data, acct, syncText }) {
   const a = acct();
   const email = (a.user && a.user.email) || a.email || '';
   const langOptions = Object.entries(I18N.LANGUAGES).map(([code, l]) => `<option value="${code}" ${code === LANG ? 'selected' : ''}>${esc(l.name)}</option>`).join('');
-  const tabs = [['general', 'gear', t('set.general')], ['account', 'user', t('set.account')], ['viewer', 'cube', t('set.viewer')], ['formats', 'layers', t('set.formats')], ['about', 'bolt', t('set.about')]];
+  const tabs = [['general', 'gear', t('set.general')], ['account', 'user', t('set.account')], ['viewer', 'cube', t('set.viewer')], ['export', 'export', t('set.export')], ['formats', 'layers', t('set.formats')], ['about', 'bolt', t('set.about')]];
   const opt = (name, list, cur, label) => `<select class="input" id="${name}">${list.map((x) => `<option value="${x}" ${cur === x ? 'selected' : ''}>${esc(label(x))}</option>`).join('')}</select>`;
   const shellState = !shell.supported ? '' : shell.registered ? (shell.pointsHere ? t('shell.stateOk') : t('shell.stateOther')) : t('shell.stateOff');
 
@@ -82,6 +84,13 @@ export async function openSettings({ tab = 'general', data, acct, syncText }) {
         <div class="note">${icon('info')}<span>${esc(t('set.viewerNote'))}</span></div>
       </section>
 
+      <section data-page="export">
+        <div class="set-hint">${esc(t('set.exportIntro'))}</div>
+        <div class="section-title">${esc(t('set.stepTitle'))}</div>
+        ${stepMergeField('s-stepmerge', (s.exportPrefs || {}).stepMerge ?? 20)}
+        <div class="note">${icon('info')}<span>${esc(t('exp.note.step'))}</span></div>
+      </section>
+
       <section data-page="formats">
         <div class="set-hint">${esc(t('set.formatsIntro', { n: FORMATS.IMPORT.length, m: FORMATS.EXPORT.length }))}</div>
         <div class="section-title">${esc(t('set.formatsRead'))}</div>
@@ -122,6 +131,7 @@ export async function openSettings({ tab = 'general', data, acct, syncText }) {
   };
   body.querySelectorAll('.set-nav button').forEach((b) => (b.onclick = () => showTab(b.dataset.tab)));
   showTab(tabs.some(([k]) => k === tab) ? tab : 'general');
+  const stepMerge = bindStepMerge(body, 's-stepmerge');
 
   const originalTheme = appTheme;
   const setTheme = (val) => {
@@ -169,6 +179,7 @@ export async function openSettings({ tab = 'general', data, acct, syncText }) {
           appTheme,
           language: m.querySelector('#s-lang').value,
           checkUpdates: m.querySelector('#s-upd').checked,
+          exportPrefs: { stepMerge: stepMerge() },
           ...(m.querySelector('#s-shell') && !m.querySelector('#s-shell').disabled ? { shellMenu: m.querySelector('#s-shell').checked } : {}),
           viewer: {
             units: m.querySelector('#s-units').value, upAxis: m.querySelector('#s-up').value, cadQuality: m.querySelector('#s-cad').value,

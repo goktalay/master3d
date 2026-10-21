@@ -99,7 +99,7 @@ Kapsam: **tüm model**, **seçili parçalar** (modeldeki yerleriyle) ya da **gö
 | OBJ + MTL | Adlı parçalar (o), malzemeler, renk dokuları (PNG) | olduğu gibi |
 | COLLADA 1.4.1 | Hiyerarşi, ağlar, Phong malzemeler | kaynak birim ve eksen `<asset>`'te |
 | USDZ | Hiyerarşi, malzemeler, dokular (Apple AR Quick Look) | m, Y yukarı |
-| STEP AP214 | Her parça ayrı ürün (montaj), adlar ve renkler; kapalı ağ FACETED_BREP, açık ağ yüzey modeli | mm, Z yukarı |
+| STEP AP214 | Her parça ayrı ürün (montaj), adlar ve renkler; kapalı ağ FACETED_BREP, açık ağ yüzey modeli; düzlemsel yüz birleştirme (aşağıda) | mm, Z yukarı |
 | STL ikili / ASCII | Üçgenler (dünya koordinatlarında) | olduğu gibi |
 | 3MF | Her parça ayrı nesne, renkler, kaynaştırılmış köşeler | mm, Z yukarı |
 | PLY ikili / ASCII | Ağ ve nokta bulutu, köşe renkleri | olduğu gibi |
@@ -108,6 +108,22 @@ Kapsam: **tüm model**, **seçili parçalar** (modeldeki yerleriyle) ya da **gö
 
 "Birim ve ekseni hedef biçime dönüştür" açıkken kaynak birim ve eksen, hedef biçimin sözleşmesine çevrilir (ör. mm / Z yukarı
 STEP → m / Y yukarı GLB). Renkler sRGB yazılır (glTF hariç; glTF doğrusal).
+
+### STEP: düzlemsel yüz birleştirme
+
+Ayarlar › Dışa aktarma › STEP (CAD) çevirici ve Dışa aktar penceresi (STEP seçiliyken): **Düzlemsel yüzleri birleştir**, %0–100
+(varsayılan %20). Aynı düzlemdeki komşu üçgenler tek çokgen yüz olur (FACE_SURFACE + PLANE; dış sınır FACE_OUTER_BOUND, delikler
+FACE_BOUND) — SolidWorks gibi programlarda düz yüzey üçgen üçgen görünmez. `src/core/export/planar.mjs`:
+
+- Bölge büyütme: büyük üçgenler önce tohum; komşu üçgen, tohumun normaline açı toleransı ve düzlemine uzaklık toleransı içindeyse
+  katılır. Yüzde → tolerans karesel: açı 0,5°–20°, uzaklık parça köşegeninin %0,01–%0,5'i (%20'de 1,3° ve %0,03). %0 = kapalı
+  (her üçgen ayrı yüz, 1.0.0 davranışı).
+- Sınırlar yarım kenarlarla çıkarılır; doğrusal ara köşeler Douglas-Peucker ile atılır. İki yüzün ortak kenar zinciri köşe
+  kimliklerine göre tek kanonik yönde sadeleştirilir, böylece iki tarafta aynı köşeler kalır (model su geçirmez kalır; testte
+  denetlenir). Köşeler yerinden oynatılmaz; düzlem, köşelerin en büyük sapmasını yarıya indiren konuma yerleştirilir.
+- Ölçüm (Meshmixer STL, 32.328 üçgen, 153 mm): %5 → 23.720 yüz, %20 → 20.018, %50 → 11.932, %100 → 4.123; köşelerin düzlemden
+  en büyük sapması %20'de 0,02 mm, %50'de 0,12 mm. OpenCascade hepsini okur, yüzey alanı farkı %20'de %0,01'in altında.
+  Eğri yüzeyler (koni, silindir, organik) düzleme indirgenemez; yüksek yüzdede şeritlere bölünür.
 
 ## Gezgin entegrasyonu
 
@@ -156,7 +172,7 @@ Daha önce yayınlanmış bir sürümü yeniden yüklemek için Actions › "mas
 
 ## Testler
 
-`npm test` (Node, 49 test): hesap ve ortak oturum, i18n eşliği (8 dil, yer tutucular), protokol yol güvenliği, komut satırı ve sağ
+`npm test` (Node, 54 test): hesap ve ortak oturum, i18n eşliği (8 dil, yer tutucular), protokol yol güvenliği, komut satırı ve sağ
 tık kaydı, biçim kaydı, çekirdek (OpenCascade ve assimp hatları, VTK / X3D / VRML, ZIP seçimi, patlatma, bağlantısız parça bulma,
 alan / hacim, IFC ağacı), 15 dışa aktarma biçiminin bağımsız okuyucularla gidiş-dönüşü ve ana süreç (sahte Electron).
 `npm run verify-formats` ve `npm run verify-export` gerçek örnek dosyalarla tarayıcıda (Chromium, WebGL) arayüz akışını sınar;
@@ -170,8 +186,8 @@ m3:// protokolü, WebAssembly iş parçacıkları ve içerik güvenlik politikas
   yoktur; programların kendisinden STEP, FBX, glTF ya da OBJ olarak kaydedilir, Master 3D bunları açar.
 - **Blender**: 2.4–2.7x dosyaları kısmen (ağlar, hiyerarşi, malzeme renkleri). Blender 2.8 ve sonrası `.blend` dosyaları
   okunamaz; sürüm algılanır ve "glTF / FBX olarak dışa aktarın" uyarısı gösterilir.
-- **STEP dışa aktarma** üçgen yüzeylidir (faceted B-rep): CAD programlarında açılır, ölçülür ve montajda kullanılır; ancak
-  silindir, NURBS yüzey ve unsur geçmişi gibi parametrik bilgi üçgen ağdan geri üretilemez. Çok büyük modellerde (300.000 üçgen
+- **STEP dışa aktarma** üçgen yüzeylidir (faceted B-rep): CAD programlarında açılır, ölçülür ve montajda kullanılır; düz
+  yüzeyler birleştirilir (yukarıda) ama silindir, NURBS yüzey ve unsur geçmişi gibi parametrik bilgi üçgen ağdan geri üretilemez. Çok büyük modellerde (300.000 üçgen
   üstü) dosya büyük olur.
 - **FBX dışa aktarma**: iskelet, animasyon ve dokular bu sürümde yazılmaz (hiyerarşi, ağlar, normaller, UV, malzeme renkleri
   yazılır). Animasyonu korumak için GLB kullanın.

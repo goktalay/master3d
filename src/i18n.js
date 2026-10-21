@@ -391,6 +391,13 @@
     "welcome.recent": "Son açılanlar",
     "welcome.removeRecent": "Listeden kaldır",
     "welcome.title": "Bir 3B dosyayı buraya bırakın",
+    "exp.stepMerge": "Düzlemsel yüzleri birleştir",
+    "exp.stepMergeHint": "Aynı düzlemdeki üçgenler tek yüz olur; SolidWorks gibi CAD programlarında düz yüzeyler üçgen üçgen görünmez. Yüzde arttıkça hafif eğik yüzeyler de birleşir. Köşe noktaları yerinden oynatılmaz.",
+    "exp.stepMergeOff": "Kapalı: her üçgen ayrı yüz",
+    "exp.stepMergeTol": "Tolerans: {a}° açı · parça boyutunun %{d} kadarı",
+    "set.export": "Dışa aktarma",
+    "set.exportIntro": "Bu ayarlar Dışa aktar penceresinde de değiştirilebilir; son kullanılan değer saklanır.",
+    "set.stepTitle": "STEP (CAD) çevirici",
   };
 
   // ---------------------------------------------------------------------------
@@ -766,6 +773,13 @@
     "welcome.recent": "Recent files",
     "welcome.removeRecent": "Remove from list",
     "welcome.title": "Drop a 3D file here",
+    "exp.stepMerge": "Merge planar faces",
+    "exp.stepMergeHint": "Triangles in the same plane become a single face, so flat surfaces don’t show up as triangles in CAD programs such as SolidWorks. Higher percentages also merge slightly tilted surfaces. Vertices are never moved.",
+    "exp.stepMergeOff": "Off: every triangle is its own face",
+    "exp.stepMergeTol": "Tolerance: {a}° angle · {d}% of the part size",
+    "set.export": "Export",
+    "set.exportIntro": "These settings can also be changed in the Export window; the last value used is kept.",
+    "set.stepTitle": "STEP (CAD) converter",
   };
 
   // ---------------------------------------------------------------------------
@@ -1141,6 +1155,13 @@
     "welcome.recent": "Fichiers récents",
     "welcome.removeRecent": "Retirer de la liste",
     "welcome.title": "Déposez un fichier 3D ici",
+    "exp.stepMerge": "Fusionner les faces planes",
+    "exp.stepMergeHint": "Les triangles d’un même plan deviennent une seule face : dans les logiciels de CAO comme SolidWorks, les surfaces planes n’apparaissent plus en triangles. Un pourcentage plus élevé fusionne aussi les surfaces légèrement inclinées. Les sommets ne sont jamais déplacés.",
+    "exp.stepMergeOff": "Désactivé : chaque triangle est une face",
+    "exp.stepMergeTol": "Tolérance : angle {a}° · {d} % de la taille de la pièce",
+    "set.export": "Exportation",
+    "set.exportIntro": "Ces réglages peuvent aussi être modifiés dans la fenêtre Exporter ; la dernière valeur utilisée est conservée.",
+    "set.stepTitle": "Convertisseur STEP (CAO)",
   };
 
   // ---------------------------------------------------------------------------
@@ -1516,6 +1537,13 @@
     "welcome.recent": "Zuletzt geöffnet",
     "welcome.removeRecent": "Aus der Liste entfernen",
     "welcome.title": "3D-Datei hier ablegen",
+    "exp.stepMerge": "Ebene Flächen zusammenfassen",
+    "exp.stepMergeHint": "Dreiecke in derselben Ebene werden zu einer Fläche, sodass ebene Flächen in CAD-Programmen wie SolidWorks nicht als Dreiecke erscheinen. Höhere Prozentwerte fassen auch leicht geneigte Flächen zusammen. Eckpunkte werden nie verschoben.",
+    "exp.stepMergeOff": "Aus: jedes Dreieck ist eine eigene Fläche",
+    "exp.stepMergeTol": "Toleranz: {a}° Winkel · {d} % der Teilegröße",
+    "set.export": "Export",
+    "set.exportIntro": "Diese Einstellungen lassen sich auch im Exportfenster ändern; der zuletzt verwendete Wert bleibt gespeichert.",
+    "set.stepTitle": "STEP-Konverter (CAD)",
   };
 
   // ---------------------------------------------------------------------------
@@ -1891,6 +1919,13 @@
     "welcome.recent": "Archivos recientes",
     "welcome.removeRecent": "Quitar de la lista",
     "welcome.title": "Suelte aquí un archivo 3D",
+    "exp.stepMerge": "Unir caras planas",
+    "exp.stepMergeHint": "Los triángulos del mismo plano forman una sola cara, así las superficies planas no aparecen como triángulos en programas CAD como SolidWorks. Con porcentajes más altos también se unen superficies ligeramente inclinadas. Los vértices nunca se desplazan.",
+    "exp.stepMergeOff": "Desactivado: cada triángulo es una cara",
+    "exp.stepMergeTol": "Tolerancia: ángulo {a}° · {d} % del tamaño de la pieza",
+    "set.export": "Exportación",
+    "set.exportIntro": "Estos ajustes también se pueden cambiar en la ventana Exportar; se guarda el último valor usado.",
+    "set.stepTitle": "Convertidor STEP (CAD)",
   };
 
   // ---------------------------------------------------------------------------
@@ -2266,6 +2301,13 @@
     "welcome.recent": "الملفات الأخيرة",
     "welcome.removeRecent": "إزالة من القائمة",
     "welcome.title": "أفلت ملفًا ثلاثي الأبعاد هنا",
+    "exp.stepMerge": "دمج الأوجه المستوية",
+    "exp.stepMergeHint": "تصبح المثلثات الواقعة في المستوى نفسه وجهًا واحدًا، فلا تظهر الأسطح المستوية مثلثاتٍ في برامج CAD مثل SolidWorks. وكلما زادت النسبة دُمجت الأسطح المائلة قليلًا أيضًا. لا تُزاح الرؤوس أبدًا.",
+    "exp.stepMergeOff": "متوقف: كل مثلث وجه مستقل",
+    "exp.stepMergeTol": "التفاوت: زاوية {a}° · {d}% من حجم القطعة",
+    "set.export": "التصدير",
+    "set.exportIntro": "يمكن تغيير هذه الإعدادات أيضًا في نافذة التصدير؛ وتُحفظ آخر قيمة مستخدمة.",
+    "set.stepTitle": "محوّل STEP ‏(CAD)",
   };
 
   // ---------------------------------------------------------------------------
@@ -2641,6 +2683,13 @@
     "welcome.recent": "最近打开",
     "welcome.removeRecent": "从列表中移除",
     "welcome.title": "将 3D 文件拖到这里",
+    "exp.stepMerge": "合并平面",
+    "exp.stepMergeHint": "同一平面内的三角形合并为一个面，在 SolidWorks 等 CAD 程序中平面不再显示为三角形。百分比越高，略有倾斜的表面也会合并。顶点位置始终不变。",
+    "exp.stepMergeOff": "关闭：每个三角形为单独的面",
+    "exp.stepMergeTol": "公差：角度 {a}° · 零件尺寸的 {d}%",
+    "set.export": "导出",
+    "set.exportIntro": "这些设置也可在“导出”窗口中更改；会保存上次使用的值。",
+    "set.stepTitle": "STEP（CAD）转换器",
   };
 
   // ---------------------------------------------------------------------------
@@ -3016,6 +3065,13 @@
     "welcome.recent": "Недавние файлы",
     "welcome.removeRecent": "Убрать из списка",
     "welcome.title": "Перетащите сюда 3D-файл",
+    "exp.stepMerge": "Объединять плоские грани",
+    "exp.stepMergeHint": "Треугольники в одной плоскости становятся одной гранью, поэтому в САПР вроде SolidWorks плоские поверхности не выглядят набором треугольников. При большем проценте объединяются и слегка наклонённые поверхности. Вершины никогда не сдвигаются.",
+    "exp.stepMergeOff": "Выкл.: каждый треугольник — отдельная грань",
+    "exp.stepMergeTol": "Допуск: угол {a}° · {d}% от размера детали",
+    "set.export": "Экспорт",
+    "set.exportIntro": "Эти настройки можно менять и в окне «Экспорт»; сохраняется последнее значение.",
+    "set.stepTitle": "Конвертер STEP (САПР)",
   };
 
   // ---------------------------------------------------------------------------

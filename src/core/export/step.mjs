@@ -3,8 +3,11 @@
 // açık ağlar SHELL_BASED_SURFACE_MODEL (yüzey) olarak yazılır. Birim milimetre (hazırlıkta dönüştürülür), Z yukarı.
 // Parametrik CAD verisi (silindir, NURBS yüzeyi, unsur geçmişi) üçgen ağdan geri üretilemez: dosya CAD programlarında
 // "mesh / faceted body" olarak açılır (bilinen sınır, tanıtımda belirtilir).
+// merge (0–100, ayar yüzdesi): aynı düzlemdeki komşu üçgenler tek çokgen yüze birleştirilir (planar.mjs) — CAD'de düz
+// yüzeyler üçgen üçgen değil tek yüz olarak görünür. 0: her üçgen ayrı yüz.
 
 import { renderables, meshData, materialInfo, enc } from './prepare.mjs';
+import { mergePlanar, mergeTolerance } from './planar.mjs';
 
 const str = (s) => `'${String(s ?? '').replace(/\\/g, '\\\\').replace(/'/g, "''").replace(/[^\x20-\x7e]/g, (c) => `\\X2\\${c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}\\X0\\`)}'`;
 // STEP gerçek sayıları her zaman nokta içerir: 1. / 0.5 / -1.5E-07
@@ -16,7 +19,7 @@ const real = (x) => {
   return s.includes('.') ? s : s + '.';
 };
 
-export function writeSTEP(root, { name = 'model', timestamp = new Date() } = {}) {
+export function writeSTEP(root, { name = 'model', timestamp = new Date(), merge = 0 } = {}) {
   const lines = [];
   let n = 0;
   const add = (body) => { n++; lines.push(`#${n}=${body};`); return `#${n}`; };
@@ -90,21 +93,52 @@ export function writeSTEP(root, { name = 'model', timestamp = new Date() } = {})
     if (!tris.length) continue;
     const closed = [...edges.values()].every((c) => c === 2);
     const cp = pts.map((i) => add(`CARTESIAN_POINT('',(${real(d.pos[i * 3])},${real(d.pos[i * 3 + 1])},${real(d.pos[i * 3 + 2])}))`));
-    // Her üçgen bir düzlemsel yüz: FACE_SURFACE (PLANE) + POLY_LOOP. Yalın FACE kayıtlarını OpenCascade üçgenlemez.
     const P = (i) => [d.pos[pts[i] * 3], d.pos[pts[i] * 3 + 1], d.pos[pts[i] * 3 + 2]];
     const faces = [];
-    for (const [a, b, c] of tris) {
-      const A = P(a), B = P(b), C = P(c);
-      const u = [B[0] - A[0], B[1] - A[1], B[2] - A[2]], v = [C[0] - A[0], C[1] - A[1], C[2] - A[2]];
-      const nx = u[1] * v[2] - u[2] * v[1], ny = u[2] * v[0] - u[0] * v[2], nz = u[0] * v[1] - u[1] * v[0];
-      const nl = Math.hypot(nx, ny, nz), ul = Math.hypot(u[0], u[1], u[2]);
-      if (nl < 1e-14 || ul < 1e-14) continue; // alansız üçgen
-      const nd = add(`DIRECTION('',(${real(nx / nl)},${real(ny / nl)},${real(nz / nl)}))`);
+    // Düzlem: yüzün ilk köşesinde, normal n, referans yönü ilk kenarın düzleme izdüşümü
+    const planeAt = (a, n, b, at = null) => {
+      const A = P(a), B = P(b);
+      let u = [B[0] - A[0], B[1] - A[1], B[2] - A[2]];
+      const k = u[0] * n[0] + u[1] * n[1] + u[2] * n[2];
+      u = [u[0] - k * n[0], u[1] - k * n[1], u[2] - k * n[2]];
+      let ul = Math.hypot(u[0], u[1], u[2]);
+      if (ul < 1e-14) { u = Math.abs(n[0]) < 0.9 ? [0, -n[2], n[1]] : [n[2], 0, -n[0]]; ul = Math.hypot(u[0], u[1], u[2]); }
+      const nd = add(`DIRECTION('',(${real(n[0])},${real(n[1])},${real(n[2])}))`);
       const rd = add(`DIRECTION('',(${real(u[0] / ul)},${real(u[1] / ul)},${real(u[2] / ul)}))`);
-      const plane = add(`PLANE('',${add(`AXIS2_PLACEMENT_3D('',${cp[a]},${nd},${rd})`)})`);
-      const loop = add(`POLY_LOOP('',(${cp[a]},${cp[b]},${cp[c]}))`);
-      const bound = add(`FACE_OUTER_BOUND('',${loop},.T.)`);
-      faces.push(add(`FACE_SURFACE('',(${bound}),${plane},.T.)`));
+      const loc = at ? add(`CARTESIAN_POINT('',(${real(at[0])},${real(at[1])},${real(at[2])}))`) : cp[a];
+      return add(`PLANE('',${add(`AXIS2_PLACEMENT_3D('',${loc},${nd},${rd})`)})`);
+    };
+    let tol = null;
+    if (merge > 0) {
+      const mn = [Infinity, Infinity, Infinity], mx = [-Infinity, -Infinity, -Infinity];
+      for (const i of pts) for (let k = 0; k < 3; k++) { const x = d.pos[i * 3 + k]; if (x < mn[k]) mn[k] = x; if (x > mx[k]) mx[k] = x; }
+      tol = mergeTolerance(merge, Math.hypot(mx[0] - mn[0], mx[1] - mn[1], mx[2] - mn[2]));
+    }
+    if (tol) {
+      // Aynı düzlemdeki üçgenler tek yüz: dış sınır FACE_OUTER_BOUND, delikler FACE_BOUND
+      const PP = new Float64Array(pts.length * 3);
+      pts.forEach((i, j) => { PP[j * 3] = d.pos[i * 3]; PP[j * 3 + 1] = d.pos[i * 3 + 1]; PP[j * 3 + 2] = d.pos[i * 3 + 2]; });
+      const flat = new Uint32Array(tris.length * 3);
+      tris.forEach((tr, j) => flat.set(tr, j * 3));
+      for (const f of mergePlanar(PP, flat, tol)) {
+        const [outer, ...holes] = f.loops;
+        const bounds = [add(`FACE_OUTER_BOUND('',${add(`POLY_LOOP('',(${outer.map((v) => cp[v]).join(',')}))`)},.T.)`)];
+        for (const hl of holes) bounds.push(add(`FACE_BOUND('',${add(`POLY_LOOP('',(${hl.map((v) => cp[v]).join(',')}))`)},.T.)`));
+        faces.push(add(`FACE_SURFACE('',(${bounds.join(',')}),${planeAt(outer[0], f.normal, outer[1], f.deviation > 0 ? f.origin : null)},.T.)`));
+      }
+    } else {
+      // Her üçgen bir düzlemsel yüz: FACE_SURFACE (PLANE) + POLY_LOOP. Yalın FACE kayıtlarını OpenCascade üçgenlemez.
+      for (const [a, b, c] of tris) {
+        const A = P(a), B = P(b), C = P(c);
+        const u = [B[0] - A[0], B[1] - A[1], B[2] - A[2]], v = [C[0] - A[0], C[1] - A[1], C[2] - A[2]];
+        const nx = u[1] * v[2] - u[2] * v[1], ny = u[2] * v[0] - u[0] * v[2], nz = u[0] * v[1] - u[1] * v[0];
+        const nl = Math.hypot(nx, ny, nz), ul = Math.hypot(u[0], u[1], u[2]);
+        if (nl < 1e-14 || ul < 1e-14) continue; // alansız üçgen
+        const plane = planeAt(a, [nx / nl, ny / nl, nz / nl], b);
+        const loop = add(`POLY_LOOP('',(${cp[a]},${cp[b]},${cp[c]}))`);
+        const bound = add(`FACE_OUTER_BOUND('',${loop},.T.)`);
+        faces.push(add(`FACE_SURFACE('',(${bound}),${plane},.T.)`));
+      }
     }
     if (!faces.length) continue;
     let item, rep;
